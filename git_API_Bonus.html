@@ -4,9 +4,108 @@
     <meta charset="UTF-8">
     <title>GIT HUB API</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style> 
+        
+        #outer_Box {
+            height: 100vh;
+            width: 100vw;
+            background-color: whitesmoke;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #inner_Box {
+            width: 50vw;
+            background-color: #333a41;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+        }
+    
+    </style>
+
+
+
 </head>
 <body>
 
+<div id = "outer_Box">
+
+    <div id = "inner_Box">
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Company Report</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row" >Total number of profiles</th>
+                <td id = "total_Profiles"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Total number of active profiles</th>
+                <td id = "total_Active_Profiles"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Total sum of all balances</th>
+                <td id = "balance_Sum"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Average balance per user</th>
+                <td id = "average_Balance_Per_User"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Average age of all users</th>
+                <td id = "average_Age_All_Users"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Total male users</th>
+                <td id = "total_Male_Users"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Total female users</th>
+                <td id = "total_female_Users"></td>
+            </tr>
+           
+   
+            <tr>
+                <th scope="row" >Most common eye color</th>
+                <td id = "common_Eye_Color"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Active account balance</th>
+                <td id = "active_Balance"></td>
+            </tr>
+
+            <tr>
+                <th scope="row" >Inactive account balance</th>
+                <td id = "in_active_Balance"></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table table-dark">
+            <tr>
+                <th scope="row" >List of Companies</th>
+                <td id = "user_companies_List"></td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
@@ -130,6 +229,74 @@
         // console.log(eye_Color_Most);
         // console.log(active_Account_Balance);
         // console.log(non_Active_Account_Balance);
+
+
+        /*---Adds total umber of profiles info to html--------------------------------------------------------------------------------------- */
+
+        var total_Profile = document.getElementById("total_Profiles");
+
+        total_Profile.innerHTML = number_Of_Profiles;
+
+        /*---Adds total umber of active profiles to html--------------------------------------------------------------------------------------- */
+
+        var total_Active_Profile = document.getElementById("total_Active_Profiles");
+
+        total_Active_Profile.innerHTML = number_Of_Active_Profiles;
+
+        /*---adds total balance to html--------------------------------------------------------------------------------------- */
+
+        var balance_Sum= document.getElementById("balance_Sum");
+
+        balance_Sum.innerHTML = "$" + total_Balance;
+
+        /*---Adds average balance per user to html--------------------------------------------------------------------------------------- */
+
+        var average_Balance_Per_User = document.getElementById("average_Balance_Per_User");
+
+        average_Balance_Per_User.innerHTML = "$" + average_Balance;
+
+        /*---Adds average age of all users to html--------------------------------------------------------------------------------------- */
+
+        var  average_Age_All_Users = document.getElementById("average_Age_All_Users");
+
+        average_Age_All_Users.innerHTML = average_Age;
+
+        /*---Adds total number of male users to HTML--------------------------------------------------------------------------------------- */
+
+        var  total_Male_Users = document.getElementById("total_Male_Users");
+
+        total_Male_Users.innerHTML = number_Of_Male;
+
+        /*---Adds total number of female users to HTML--------------------------------------------------------------------------------------- */
+
+        var  total_female_Users = document.getElementById("total_female_Users");
+
+        total_female_Users.innerHTML = number_Of_Female;
+
+        /*---Adds list of companies to HTML--------------------------------------------------------------------------------------- */
+
+        var user_companies_List = document.getElementById("user_companies_List");
+
+        user_companies_List.innerHTML = companies_List.join(", ");
+
+        /*---Adds most common eye color to HTML--------------------------------------------------------------------------------------- */
+
+        var common_Eye_Color = document.getElementById("common_Eye_Color");
+
+        common_Eye_Color.innerHTML = eye_Color_Most;
+
+        /*---Adds active account balance to HTML--------------------------------------------------------------------------------------- */
+
+        var active_Balance = document.getElementById("active_Balance");
+
+        active_Balance.innerHTML = "$" + active_Account_Balance;
+
+        /*---Adds inactive account balance to HTML--------------------------------------------------------------------------------------- */
+
+        var  in_active_Balance = document.getElementById("in_active_Balance");
+
+        in_active_Balance.innerHTML = "$" + non_Active_Account_Balance;
+        
     });
 
 
@@ -145,8 +312,6 @@
         input = +input;
         return input;
     };
-    
-    
     
     
     
