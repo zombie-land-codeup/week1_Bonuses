@@ -15,28 +15,143 @@
     var all_Data_Id = [];
     var number_Of_Profiles = 0;
     var number_Of_Active_Profiles = 0;
+    var regex = /[\$\,]/gi;
+    var total_Balance = 0;
+    var average_Balance = 0;
+    var total_Age = 0;
+    var average_Age = 0;
+    var number_Of_Male = 0;
+    var number_Of_Female = 0;
+    var companies_List = [];
+    var brown = 0;
+    var blue = 0;
+    var green = 0;
+    var regex_brown = /brown/;
+    var regex_blue = /blue/;
+    var regex_green = /green/;
+    var eye_Color_Most = '';
+    var non_Active_Account_Balance = 0;
+    var active_Account_Balance = 0;
 
     $.get("git_API_Bonus.json", {
     }).done(function(data) {
         data.forEach(function(data) {
 
+            /*--Creates an array of all id's to test number of profiles---------------------------------------------------------------------------------------- */
             all_Data_Id.unshift(data._id);
 
+            /*--counts the active profiles---------------------------------------------------------------------------------------- */
             if (data.isActive === true) {
                 number_Of_Active_Profiles = number_Of_Active_Profiles + 1
             }
 
+            /*--sums all the balance's of all profiles---------------------------------------------------------------------------------------- */
+            total_Balance = total_Balance + convert_To_Number(data.balance);
+
+            /*--sums average age of all profiles---------------------------------------------------------------------------------------- */
+            total_Age = total_Age + data.age;
+
+            /*--counts the number of male profiles---------------------------------------------------------------------------------------- */
+            if (data.gender === "male") {
+                number_Of_Male = number_Of_Male + 1;
+            }
+
+            /*--counts the number of female profiles---------------------------------------------------------------------------------------- */
+            if (data.gender === "female") {
+                number_Of_Female = number_Of_Female + 1;
+            }
+
+            /*--Creates an array of all id's to test number of profiles---------------------------------------------------------------------------------------- */
+            companies_List.unshift(data.company);
+
+
+            /*--counts the number of users with brown, blue and green eye color---------------------------------------------------------------------------------------- */
+            
+            if (regex_brown.test(data.eyeColor) === true) {
+                brown = brown + 1; 
+            }
+
+            if (regex_blue.test(data.eyeColor) === true) {
+                blue = blue + 1;
+            }
+
+            if (regex_green.test(data.eyeColor) === true) {
+                green = green + 1;
+            }
+
+            /*--finds which eye color occurs the most---------------------------------------------------------------------------------------- */
+            
+            if (brown > green && brown > blue) {
+                eye_Color_Most = "brown"
+            } else if (green > brown && green > blue) {
+                eye_Color_Most = "green";
+            } else {
+                eye_Color_Most = "blue"
+            }
+
+            /*--finds the balance of all active accounts---------------------------------------------------------------------------------------- */
+            if (data.isActive === true) {
+                active_Account_Balance = active_Account_Balance + convert_To_Number(data.balance);
+            }
+
+            /*--finds the balance of all active accounts---------------------------------------------------------------------------------------- */
+            if (data.isActive === false) {
+                non_Active_Account_Balance = non_Active_Account_Balance + convert_To_Number(data.balance);
+            }
         });
 
+        /*--creates and average balance per user---------------------------------------------------------------------------------------- */
         var number_Of_Profiles = all_Data_Id.length;
+        
+        average_Balance = (total_Balance/number_Of_Profiles).toFixed(2);
+
+        /*--creates the average age variable---------------------------------------------------------------------------------------- */
+        average_Age = (total_Age/number_Of_Profiles).toFixed(0);
+
+        /*--adds .tofixed to both active_Account_Balance and non_Active_Account_Balance---------------------------------------------------------------------------------------- */
+        active_Account_Balance = active_Account_Balance.toFixed(2);
+        non_Active_Account_Balance = non_Active_Account_Balance.toFixed(2);
 
 
-        console.log(number_Of_Profiles);
-        console.log(number_Of_Active_Profiles);
+        /*-console log tests----------------------------------------------------------------------------------------- */
+        /*------------------------------------------------------------------------------------------ */
+        /*------------------------------------------------------------------------------------------ */
+        // console.log(number_Of_Profiles);
+        // console.log(number_Of_Active_Profiles);
+        // console.log(total_Balance);
+        // console.log(average_Balance);
+        // console.log(average_Age);
+        // console.log(number_Of_Male);
+        // console.log(number_Of_Female);
+        // console.log(companies_List);
+        // console.log(brown);
+        // console.log(blue);
+        // console.log(green);
+        // console.log(eye_Color_Most);
+        // console.log(active_Account_Balance);
+        // console.log(non_Active_Account_Balance);
+    });
 
 
-    })
+    /*---Functions --------------------------------------------------------------------------------------- */
 
+
+    /*--removes all $ symbols and commas and converts the input to a number---------------------------------------------------------------------------------------- */
+    var convert_To_Number = function(input) {
+        
+        while (regex.test(input) === true) {
+            input = input.replace(regex, '');
+        }
+        input = +input;
+        return input;
+    };
+    
+    
+    
+    
+    
+    
+    
 </script>
 
 
