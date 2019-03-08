@@ -1,0 +1,162 @@
+<!--### Restaurant API-->
+
+<!--Using the endpoint ```https://frest.glitch.me/restaurants```, complete the following exercises:-->
+
+<!--1. return an array of restaurant objects that are currently open-->
+<!--1. return the number of "Pizza" restaurants-->
+<!--1. **EXTRA CHALLENGE:** find the restaurant closest to "Katz's Delicatessen"-->
+<!--1. **EXTRA CHALLENGE:** use Bootstrap or CSS Grid with Flexbox to style out cards for all restarants and use JS to dynamically build the cards-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant API</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+</head>
+<body>
+
+
+<h1>Adrien's Crazy Favourite Restaurants</h1>
+
+<div id="wrapper">
+    <button class="pure-button" id="openRestaurants" type="button">Click to see Restaurants open right now!</button>
+</div>
+
+
+<div id="restaurants"></div>
+
+
+<style>
+
+    h1{
+        text-align: center;
+    }
+    #wrapper{
+        margin-bottom:5%;
+    }
+
+    #restaurants{
+        text-align: center;
+    }
+
+
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+<script>
+
+    (function () {
+        "use strict";
+
+
+
+        $.ajax("https://frest.glitch.me/restaurants").done(function (restaurants) {
+
+
+
+            $("#restaurants").html('');
+
+            $.each(restaurants,function(index) {
+
+
+                console.log($('#restaurants').append('<div>' +
+                    restaurants[index].name +
+                    '</div>'));
+
+            });
+
+
+
+        });
+
+        $('#openRestaurants').click(function() {
+
+
+            $.ajax("https://frest.glitch.me/restaurants").done(function (restaurants) {
+
+                $("#restaurants").html('');
+
+
+                for (var i = 0; i < restaurants.length; i++) {
+
+                    var days = restaurants[i].operating_hours;
+
+                    var now = new Date();
+
+                    var arrayDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+                    var day = arrayDays[now.getDay() ];
+
+
+
+                    var x = days[day];
+
+                    if (x.indexOf('-') > -1) {
+
+                        var index = x.indexOf('-');
+
+                        var opening = x.substr(0, index - 1);
+
+                        var closing = x.substr(index + 2, x.length);
+
+
+                        //Rework logic damn it.
+                        //add some time to the logic
+
+                        // Converting Time
+                        // The Dark Sky API displays time as a single numeric value that represents the number of seconds since 12:00AM (GMT) January 1, 1970. To convert this value to a Unix Time Stamp that can be converted to a human readable date, create a new Date() object using this numeric value from Dark Sky multiplied by 1000. The following example will display the Unix Time Stamp of 1551736889 as a standard date:
+                        //
+                        //
+                        //     var dateObject = new Date(1551736889 * 1000);
+                        // console.log(dateObject.toString());
+                        // The above example would output Mon Mar 04 2019 16:01:29 GMT-0600 (Central Standard Time).
+                        //
+                        // Many other Date methods exist to control the way a date output is formatted.
+
+
+
+                            var dOpen = new Date("01/01/2001 " + opening);
+                        var dClose = new Date("01/01/2001 " + closing);
+                        var myTime = new Date();
+                        console.log(myTime);
+                        console.log(dOpen);
+                        console.log(dClose);
+
+                        //Work on the dutch
+
+                        if (dOpen<myTime<dClose) {
+
+                            // console.log(i);
+                            console.log($('#restaurants').append('<div>' +
+                                restaurants[i].name +
+                                '</div>'));
+                            console.log( restaurants[i].name);
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+            });
+
+        });
+
+
+
+
+    })();
+
+</script>
+
+</body>
+</html>
